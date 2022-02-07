@@ -1,0 +1,46 @@
+<% if(QponMaster.length==0){ %>
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h2 class="subtitle">
+                NO ONE HAS REDEEMED THIS COUPON
+            </h2>
+        </div>
+    </div>
+</section>
+
+
+
+<% } else { %>
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+
+            <h2 class="subtitle">
+                This coupon has been redeemed by : 
+            </h2>
+
+            <br>
+
+            <table class="table is-bordered is-striped is-hoverable is-centered">
+                <tr>
+                    <td> MEMBER ID</td>
+                    <td> MEMBER NAME </td>
+                </tr>
+
+                <% QponMaster.forEach(function (master) { %>
+                <tr>
+                    <td> <%= master.id %></td>
+                    <td> <%= master.username %> </td>
+                </tr>
+                <% });%>
+            </table>
+
+        </div>
+    </div>
+</section>
+
+<% } %>

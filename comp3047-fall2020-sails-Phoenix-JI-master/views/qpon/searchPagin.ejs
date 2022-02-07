@@ -1,0 +1,246 @@
+<div class="container">
+
+    <div class="columns is-multiline " >
+
+        <div class="column is-half is-multiline ">
+
+           
+                <div id="p2">
+                
+                </div>
+            
+        </div>
+        <div class="column is-one-third is-right is-offset-1 ">
+
+            <!--form action="/qpon/search" method="GET" onclick="fetchPage(2,0)"-->
+
+                <div class="Region">
+                    <label class="label">Region</label>
+                    <div class="control">
+                        <div class="select">
+                            <select id="areaID" name="area">
+                                <% if(req.query.area=="HK_Island"){ %>
+                                <option value="HK_Island">HK Island</option>
+                                <option value="Kowloon">Kowloon</option>
+                                <option value="New_Territories">New Territories</option>
+                                <option value=""> Not Specified </option>
+                                <% }else if(req.query.area=="Kowloon"){ %>
+                                <option value="Kowloon">Kowloon</option>
+                                <option value="HK_Island">HK Island</option>
+                                <option value="New_Territories">New Territories</option>
+                                <option value=""> Not Specified </option>
+                                <% }else if(req.query.area=="New_Territories"){ %>
+                                <option value="New_Territories">New Territories</option>
+                                <option value="HK_Island">HK Island</option>
+                                <option value="Kowloon">Kowloon</option>
+                                <option value=""> Not Specified </option>
+                                <% }else{ %>
+                                <option value=""> Not Specified </option>
+                                <option value="HK_Island">HK Island</option>
+                                <option value="Kowloon">Kowloon</option>
+                                <option value="New_Territories">New Territories</option>
+                                <% }%>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="MinCoin">
+                    <label class="label">Min Coin</label>
+                    <div class="control">
+                        <input class="input" id="mincoinsID" type="number" min="0" name="minCoin"
+                            value="<%= req.query.minCoin %>">
+                        <!--//mincoinsPass-->
+                    </div>
+                </div>
+                <br>
+
+                <div class="MaxCoin">
+                    <label class="label">Max Coin</label>
+                    <div class="control">
+                        <input class="input" id="maxcoinsID" type="number" min="1" name="maxCoin"
+                            value="<%= req.query.maxCoin %>">
+                        <!--maxcoinsPass-->
+                    </div>
+                </div>
+                <br>
+                <div class="ExpiryDate">
+                    <label class="label">Expiry Date</label>
+                    <div class="control">
+                        <input class="input" id="dateID" type="date" name="expiryDate"
+                            value="<%= req.query.expiryDate %>">
+
+                    </div>
+                </div>
+
+                <br>
+                <br>
+
+                <br>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-link" type="submit" onclick="fetchPage(2,0)">Submit</button>
+                    </div>
+                </div>
+            <!--/form-->
+        </div>
+
+
+        <div class="column is-half ">
+
+            <nav class="pagination" role="navigation" aria-label="pagination">
+                <button class="pagination-previous" id="previousButton">Previous</button>
+                <button class="pagination-next" id="nextButton">Next page</button>
+                <ul class="pagination-list">
+                    <li>
+                        <a class="pagination-link" id="firstLink">1</a>
+                    </li>
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                    <li>
+                        <a class="pagination-link" id="previousLink">45</a>
+                    </li>
+                    <li>
+                        <a class="pagination-link is-current" id="currentLink">46</a>
+                    </li>
+                    <li>
+                        <a class="pagination-link" id="nextLink">47</a>
+                    </li>
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                    <li>
+                        <a class="pagination-link" id="lastLink">86</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<script>
+    function setPagination(limit, offset, numOfRecords) {
+
+        var previousButton = document.getElementById("previousButton");
+        var nextButton = document.getElementById("nextButton");
+        var currentLink = document.getElementById("currentLink");
+        var previousLink = document.getElementById("previousLink");
+        var nextLink = document.getElementById("nextLink");
+        var firstLink = document.getElementById("firstLink");
+        var lastLink = document.getElementById("lastLink");
+
+        // var numOfRecords = parseInt("<%= NumOfRecord %>");
+
+        //var baseUrl = "/qpon/search?area=<%= req.query.area %>&minCoin=<%= req.query.minCoin %>&maxCoin=<%= req.query.maxCoin %>&expiryDate=<%= req.query.expiryDate %>&limit=" + limit + "&offset=";
+
+        firstLink.onclick = function () { fetchPage(limit, 0) };
+        previousButton.onclick = function () { fetchPage(limit, offset - limit) };
+        previousLink.onclick = function () { fetchPage(limit, offset - limit) };
+        currentLink.onclick = function () { fetchPage(limit, offset) };
+        nextLink.onclick = function () { fetchPage(limit, offset + limit) };
+        nextButton.onclick = function () { fetchPage(limit, offset + limit) };
+        lastLink.onclick = function () { fetchPage(limit, (Math.ceil(numOfRecords / limit) - 1) * limit) };
+
+        var currentPageNumber = Math.floor(offset / limit) + 1;
+
+        previousLink.innerHTML = currentPageNumber - 1;
+        currentLink.innerHTML = currentPageNumber;
+        nextLink.innerHTML = currentPageNumber + 1;
+        lastLink.innerHTML = Math.ceil(numOfRecords / limit);
+
+        if (offset < limit) {
+            previousButton.setAttribute("disabled", true);
+            previousLink.style.display = "none";
+        } else {
+            previousButton.removeAttribute('disabled');
+            previousLink.style.display = "block";
+        }
+
+        if (offset + limit >= numOfRecords) {
+            nextButton.setAttribute("disabled", true);
+            nextLink.style.display = "none";
+        } else {
+            nextButton.removeAttribute("disabled");
+            nextLink.style.display = "block";
+        }
+    }
+
+    setPagination(2, 0);
+
+</script>
+
+<script>
+
+    async function fetchPage(limit, offset) {
+
+        var area = document.getElementById('areaID').value;
+        var minCoin = document.getElementById('mincoinsID').value;
+        var maxCoin = document.getElementById('maxcoinsID').value;
+        var expiryDate = document.getElementById('dateID').value;
+
+        var response = await fetch('/qpon/search?area='+area+'&minCoin='+minCoin+'&maxCoin='+maxCoin+'&expiryDate='+expiryDate+'&limit='+limit+"&offset="+offset);
+       // var response = await fetch("/qpon/search?area=<%= req.query.area %>&minCoin=<%= req.query.minCoin %>&maxCoin=<%= req.query.maxCoin %>&expiryDate=<%= req.query.expiryDate %>&limit=" + limit + "&offset=" + offset)
+
+        if (response.ok) {
+            var qponsPass = await response.json();
+
+            var dynamicCode = '<div class="columns is-multiline ">';
+
+            qponsPass.qpons.forEach(function (qpon) {
+               // dynamicCode += "<tr><td>" + qpon.tittle + "</td><td>" + qpon.restaurant + "</td></tr>";
+               dynamicCode +='<div class="column is-half ">'+
+                                '<a href="/qpon/detail/'+qpon.id +'"'+ '>'+
+                                    '<div class="card" style="margin-bottom: 1em;">'+
+
+                                        '<div class="card-image">'+
+                                            '<figure class="image is-square">'+ 
+
+                                                '<img style="object-fit:cover" src='+'"'+qpon.imageLink+'"'+'/>'+
+                                                
+                                            '</figure>'+ 
+                                        '</div>'+  
+
+                                        '<div class="card-content">'+
+                                            '<section class="hero">'+
+                                                '<div class="hero-body">'+
+                                                    '<div class="container">'+
+                                                        '<h1 class="title">'+
+                                                            qpon.restaurant+
+                                                        '</h1>'+
+                                                        '<h2 class="subtitle">'+
+                                                            qpon.tittle+
+                                                        '</h2>'+
+                                                        '<h3 class="subtitle">'+
+                                                            'Conis:'+qpon.coins+
+                                                        '</h3>'+
+                                                    '</div>'+
+                                            '</div>'+
+                                            '</section>'+
+                                        '</div>'+
+
+                                    '</div>'+  
+                                '</a>'+
+                            '</div>';
+            });
+
+            document.querySelector("#p2").innerHTML = dynamicCode+'</div>';
+
+            setPagination(limit, offset, qponsPass.numOfRecords);
+
+        } else if(response.status == 401){
+          //  alert(response.status + ": " + response.statusText);
+          var msg = await response.json();
+          alert(msg);
+        }
+
+    }
+
+    fetchPage(2, 0);
+
+</script>

@@ -1,0 +1,130 @@
+<div id="p2">
+
+
+</div>
+
+<nav class="pagination" role="navigation" aria-label="pagination">
+    <button class="pagination-previous" id="previousButton">Previous</button>
+    <button class="pagination-next" id="nextButton">Next page</button>
+    <ul class="pagination-list">
+        <li>
+            <a class="pagination-link" id="firstLink">1</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" id="previousLink">45</a>
+        </li>
+        <li>
+            <a class="pagination-link is-current" id="currentLink">46</a>
+        </li>
+        <li>
+            <a class="pagination-link" id="nextLink">47</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" id="lastLink">86</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    function setPagination(limit, offset) {
+
+        var previousButton = document.getElementById("previousButton");
+        var nextButton = document.getElementById("nextButton");
+        var currentLink = document.getElementById("currentLink");
+        var previousLink = document.getElementById("previousLink");
+        var nextLink = document.getElementById("nextLink");
+        var firstLink = document.getElementById("firstLink");
+        var lastLink = document.getElementById("lastLink");
+
+        var numOfRecords = parseInt("<%= numOfRecords %>");
+       // var limit = Math.max(parseInt("<%= req.query.limit %>"), 2) || 2;
+        //var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
+
+       
+         var baseUrl = "/person/paginate?limit=" + limit + "&offset=";
+
+       // firstLink.onclick = function () { alert("You should call the ajax function here") };
+
+        // firstLink.href = baseUrl + 0;
+        //previousButton.href = baseUrl + (offset - limit);
+        //previousLink.href = baseUrl + (offset - limit);
+        //currentLink.href = baseUrl + offset;
+        //nextLink.href = baseUrl + (offset + limit);
+        //nextButton.href = baseUrl + (offset + limit);
+        //lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+
+        firstLink.onclick = function () { fetchPage(limit, 0) };
+        previousButton.onclick = function () { fetchPage(limit, offset - limit) };
+        previousLink.onclick = function () { fetchPage(limit, offset - limit) };
+        currentLink.onclick = function () { fetchPage(limit, offset) };
+        nextLink.onclick = function () { fetchPage(limit, offset + limit) };
+        nextButton.onclick = function () { fetchPage(limit, offset + limit) };
+        lastLink.onclick = function () { fetchPage(limit, (Math.ceil(numOfRecords / limit) - 1) * limit) };
+
+        var currentPageNumber = Math.floor(offset / limit) + 1;
+
+        previousLink.innerHTML = currentPageNumber - 1;
+        currentLink.innerHTML = currentPageNumber;
+        nextLink.innerHTML = currentPageNumber + 1;
+        lastLink.innerHTML = Math.ceil(numOfRecords / limit);
+
+        if (offset < limit) {
+            previousButton.setAttribute("disabled", true);
+            //previousButton.href = "";
+            previousLink.style.display = "none";
+        }else{
+            previousButton.removeAttribute('disabled');
+            previousLink.style.display = "block";
+        }
+
+        if (offset + limit >= numOfRecords) {
+            nextButton.setAttribute("disabled", true);
+           // nextButton.href = "";
+            nextLink.style.display = "none";
+        }else{
+            nextButton.removeAttribute("disabled");
+            nextLink.style.display = "block";
+        }
+    }
+
+    setPagination(2, 0);
+
+</script>
+
+<script>
+
+    async function fetchPage(limit, offset) {
+
+        var response = await fetch("/person/aginate?limit=" + limit + "&offset=" + offset)
+
+        if (response.ok) {
+            var persons = await response.json();
+
+            var dynamicCode = '<table class="table is-bordered is-striped is-hoverable is-fullwidth">';
+
+            // var teamMembers = ["Martin", "Kenny", "Tony"];
+
+            persons.forEach(function (person) {
+                dynamicCode += "<tr><td>" + person.name + "</td><td>" + person.age + "</td></tr>";
+            });
+
+            document.querySelector("#p2").innerHTML = dynamicCode + "</table>";
+
+            setPagination(limit,offset);
+
+            // alert(html);
+        } else {
+            alert(response.status + ": " + response.statusText);
+        }
+
+    }
+
+    fetchPage(2, 0);
+
+</script>

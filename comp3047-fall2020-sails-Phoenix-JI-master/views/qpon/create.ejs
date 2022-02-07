@@ -1,0 +1,174 @@
+<!--create.ejs-->
+<form action="/qpon/create" method="post">
+
+    <head>
+        <!--STYLES-->
+        <link rel="stylesheet" href="/styles/importer.css">
+        <!--STYLES END-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    </head>
+
+
+
+    <section class="section">
+        <div class="container">
+            <div class="columns is-multiline ">
+
+                <div class="column is-half ">
+
+                    <div class="field">
+                        <label class="label">Tittle</label>
+                        <div class="control">
+                            <input class="input" type="text" name="tittle" required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="column is-one-quarter ">
+                    <div class="field">
+                        <label class="label">Quota</label>
+                        <div class="control">
+                            <input class="input" type="number" min="1" name="quota" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-one-quarter ">
+                    <div class="field">
+                        <label class="label">Coins</label>
+                        <div class="control">
+                            <input class="input" type="number" min="1" name="coins" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half  ">
+                    <div class="field">
+                        <label class="label">Restaurant</label>
+                        <div class="control">
+                            <input class="input" type="text" name="restaurant" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half ">
+                    <div class="field">
+                        <label class="label">Expiry Date</label>
+                        <div class="control">
+                            <input class="input" type="date" name="expiryDate" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-one-quarter ">
+                    <div class="field">
+                        <label class="label">Region</label>
+                        <div class="control">
+                            <div class="select">
+                                <select onchange="areaSelected(this.value)" name="area" required>
+                                    <option value="">Select your desired region here</option>
+                                    <option value="HK_Island">HK Island</option>
+                                    <option value="Kowloon">Kowloon</option>
+                                    <option value="New_Territories">New Territories</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-one-quarter ">
+                    <div class="field">
+                        <label class="label">Mall</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="mall" name="mall" required>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half ">
+                    <div class="field">
+                        <label class="label">Image</label>
+                        <div class="control">
+                            <input class="input" type="text" name="imageLink" required>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="column is-half ">
+                    <div class="field">
+                        <label class="label">Detail</label>
+                        <div class="control">
+                            <textarea class="textarea" type="text" name="detail" rows="4" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-full ">
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-link" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        var hk_Island = ["IFC Mall", "Pacific Place", "Times Square"];
+        var kowloon = ["Elements", "Harbour City", "Festival Walk", "MegaBox", "APM"];
+        var new_Territories = ["New Town Plaza", "Tsuen Wan Plaza"];
+
+        function areaSelected(area) {
+            //alert(team);
+            var mallElem = document.getElementById("mall");
+            mallElem.options.length = 0;
+
+            if (area == "HK_Island") {
+
+
+                hk_Island.forEach(function (item) {
+                    var option = document.createElement("option");
+                    option.text = item;
+                    option.value = item;
+                    mallElem.add(option);
+                });
+
+                mallElem.disabled = false;
+
+            } else if (area == "Kowloon") {
+
+                kowloon.forEach(function (item) {
+                    var option = document.createElement("option");
+                    option.text = item;
+                    option.value = item;
+                    mallElem.add(option);
+                });
+
+                mallElem.disabled = false;
+
+            } else if (area == "New_Territories") {
+                new_Territories.forEach(function (item) {
+                    var option = document.createElement("option");
+                    option.text = item;
+                    option.value = item;
+                    mallElem.add(option);
+                });
+
+                mallElem.disabled = false;
+            }
+
+            else {
+
+                mallElem.disabled = true;
+            }
+        }
+    </script>
+</form>

@@ -1,0 +1,86 @@
+<!--paginate.ejs-->
+<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+    <% persons.forEach( function(person) { %>
+    <tr>
+        <td><%= person.name %></td>
+        <td><%= person.age %></td>
+    </tr>
+    <% }); %>
+</table>
+
+<nav class="pagination" role="navigation" aria-label="pagination">
+    <a class="pagination-previous" id="previousButton">Previous</a>
+    <a class="pagination-next" id="nextButton">Next page</a>
+    <ul class="pagination-list">
+        <li>
+            <a class="pagination-link" id="firstLink">1</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" id="previousLink">45</a>
+        </li>
+        <li>
+            <a class="pagination-link is-current" id="currentLink">46</a>
+        </li>
+        <li>
+            <a class="pagination-link" id="nextLink">47</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" id="lastLink">86</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    function setPagination() {
+
+        var previousButton = document.getElementById("previousButton");
+        var nextButton = document.getElementById("nextButton");
+        var currentLink = document.getElementById("currentLink");
+        var previousLink = document.getElementById("previousLink");
+        var nextLink = document.getElementById("nextLink");
+        var firstLink = document.getElementById("firstLink");
+        var lastLink = document.getElementById("lastLink");
+
+        var numOfRecords = parseInt("<%= numOfRecords %>");
+        var limit = Math.max(parseInt("<%= req.query.limit %>"), 2) || 2;
+        var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
+
+        var baseUrl = "/person/paginate?limit=" + limit + "&offset=";
+
+        firstLink.href = baseUrl + 0;
+        previousButton.href = baseUrl + (offset - limit);
+        previousLink.href = baseUrl + (offset - limit);
+        currentLink.href = baseUrl + offset;
+        nextLink.href = baseUrl + (offset + limit);
+        nextButton.href = baseUrl + (offset + limit);
+        lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+
+        var currentPageNumber = Math.floor(offset / limit) + 1;
+
+        previousLink.innerHTML = currentPageNumber - 1;
+        currentLink.innerHTML = currentPageNumber;
+        nextLink.innerHTML = currentPageNumber + 1;
+        lastLink.innerHTML = Math.ceil(numOfRecords / limit);
+
+        if (offset < limit) {
+            previousButton.setAttribute("disabled", true);
+            previousButton.href = "";
+            previousLink.style.display = "none";
+        }
+
+        if (offset + limit >= numOfRecords) {
+            nextButton.setAttribute("disabled", true);
+            nextButton.href = "";
+            nextLink.style.display = "none";
+        }
+    }
+
+    setPagination();
+
+</script>

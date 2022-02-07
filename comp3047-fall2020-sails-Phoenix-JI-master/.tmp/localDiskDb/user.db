@@ -1,0 +1,6 @@
+{"$$indexCreated":{"fieldName":"id","unique":true,"sparse":false}}
+{"$$indexCreated":{"fieldName":"username","unique":true,"sparse":false}}
+{"createdAt":1606878127568,"updatedAt":1606878127568,"id":11,"username":"John","password":"$2a$10$ebhMeYlj5Gded4FJQ94Rse7BNSuiqYC6KCa7ds/gjgPcMyCTTX62S","role":"SystemAdmin","coin":0,"_id":11}
+{"createdAt":1606878127568,"updatedAt":1606878127568,"id":12,"username":"Kevin","password":"$2a$10$ebhMeYlj5Gded4FJQ94Rse7BNSuiqYC6KCa7ds/gjgPcMyCTTX62S","role":"SystemAdmin","coin":0,"_id":12}
+{"createdAt":1606878127568,"updatedAt":1606979491269,"id":13,"username":"Felix","password":"$2a$10$ebhMeYlj5Gded4FJQ94RseECHJKefgd/bFWAcM0vIEheYAIiqg5xy","role":"Member","coin":3800,"_id":13}
+{"createdAt":1606878127568,"updatedAt":1606885399205,"id":14,"username":"Phoenix","password":"$2a$10$ebhMeYlj5Gded4FJQ94RseECHJKefgd/bFWAcM0vIEheYAIiqg5xy","role":"Member","coin":0,"_id":14}

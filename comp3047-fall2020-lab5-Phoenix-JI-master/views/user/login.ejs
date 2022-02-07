@@ -1,0 +1,46 @@
+<form action="/user/login" method="POST" onsubmit="submitForm(this);return false">
+  <div class="field">
+    <p class="control has-icons-left has-icons-right">
+      <input class="input" type="text" placeholder="Username" name="username">
+      <span class="icon is-small is-left">
+        <i class="fas fa-user"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field">
+    <p class="control has-icons-left">
+      <input class="input" type="password" placeholder="Password" name="password">
+      <span class="icon is-small is-left">
+        <i class="fas fa-lock"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field">
+    <p class="control">
+      <button class="button is-success">
+        Login
+      </button>
+    </p>
+  </div>
+</form>
+
+<script>
+  async function submitForm(formElem) {
+
+      var response = await fetch(formElem.action, {
+          method: formElem.method,
+          body: new FormData(formElem), //username=admin&password=123456
+      });
+
+      if (response.ok) {
+          var user = await response.json();
+          alert("Welcome back, " + user.username);
+          location.reload(true);
+      } else if (response.status == 401) {
+          var msg = await response.json();
+          alert(msg);
+      } else {
+          alert(response.statusText);
+      }
+  };
+</script>

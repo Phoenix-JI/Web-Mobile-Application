@@ -1,0 +1,144 @@
+<body>
+
+    <section class="section">
+        <div class="container">
+
+            <% if(UserQponGet.length>0){ %>
+
+
+                <h2 class="subtitle">
+                    Redeemed Coupons: &nbsp  Currnet Balance: <%=CurrBalance%> coins
+                </h2>
+
+                <br>
+            <div class="columns is-multiline">
+
+                <% var ir= 0 %>
+
+                <!--% UserQponGet.forEach(function (qponGet) { %-->
+
+                 <% while(ir < UserQponGet.length) {%>   
+                <div class="column is-one-third">
+
+                    <a href="/qpon/detail/<%=UserQponGet[ir].id%>">
+                        <div class="card" style="margin-bottom: 1em;">
+
+                            <div class="card-image">
+                                <figure class="image is-square">
+                                    <img style="object-fit:cover" src=<%=UserQponGet[ir].imageLink %> />
+                                </figure>
+                            </div>
+
+                            <div class="card-content">
+                                <section class="hero">
+                                    <div class="hero-body">
+                                        <div class="container">
+                                            <h1 class="title">
+                                                <%=UserQponGet[ir].restaurant%>
+                                            </h1>
+                                            <h2 class="subtitle">
+                                                <%=UserQponGet[ir].detail%>
+                                            </h2>
+                                            <h3 class="subtitle">
+                                                Expiry Date:<%=UserQponGet[ir].expiryDate%>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+                <div class="column is-one-third">
+
+                    <% if(UserQponGet[ir+1]) { %>
+                    <a href="/qpon/detail/<%=UserQponGet[ir+1].id%>">
+                        <div class="card" style="margin-bottom: 1em;">
+                            
+                            <div class="card-image">
+                                <figure class="image is-square">
+                                    <img style="object-fit:cover" src=<%=UserQponGet[ir+1].imageLink %> />
+                                </figure>
+                            </div>
+
+                            <div class="card-content">
+                                <section class="hero">
+                                    <div class="hero-body">
+                                        <div class="container">
+                                            <h1 class="title">
+                                                <%=UserQponGet[ir+1].restaurant%>
+                                            </h1>
+                                            <h2 class="subtitle">
+                                                <%=UserQponGet[ir+1].detail%>
+                                            </h2>
+                                            <h3 class="subtitle">
+                                                Expiry Date:<%=UserQponGet[ir+1].expiryDate%>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+                        </div>
+                    </a>
+                   <% }%>
+
+                </div>
+
+                <div class="column is-one-third">
+
+                    <% if(UserQponGet[ir+2]) { %>
+                    <a href="/qpon/detail/<%=UserQponGet[ir+2].id%>">
+                        <div class="card" style="margin-bottom: 1em;">
+                            
+                            <div class="card-image">
+                                <figure class="image is-square">
+                                    <img style="object-fit:cover" src=<%=UserQponGet[ir+2].imageLink %> />
+                                </figure>
+                            </div>
+
+                            <div class="card-content">
+                                <section class="hero">
+                                    <div class="hero-body">
+                                        <div class="container">
+                                            <h1 class="title">
+                                                <%=UserQponGet[ir+2].restaurant%>
+                                            </h1>
+                                            <h2 class="subtitle">
+                                                <%=UserQponGet[ir+2].detail%>
+                                            </h2>
+                                            <h3 class="subtitle">
+                                                Expiry Date:<%=UserQponGet[ir+2].expiryDate%>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+                        </div>
+                    </a>
+                    <% }%>
+
+                </div>
+
+                <% ir=ir+3 %>
+                <% } %>
+
+            </div>
+
+            <% } else { %>
+
+            <h2 class="subtitle">
+                No Cupon Has Been Redeemed &nbsp  Currnet Balance: <%=CurrBalance%> coins
+            </h2>
+
+            <% } %>
+        </div>
+    </section>
+
+
+
+</body>

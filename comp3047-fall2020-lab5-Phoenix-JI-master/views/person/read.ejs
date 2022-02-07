@@ -1,0 +1,34 @@
+<%= person.name %>, <%= person.age %>
+
+<!-- <form action="/person/delete/<%= person.id%>" method="POST"> -->
+
+    <button type="button" class="button is-danger" onclick="deletePerson('<%= person.id %>')">Delete</button>
+
+<!-- </form> -->
+
+
+<script>
+    async function deletePerson(id) {
+        var r = confirm("Confirm Delete?");
+        
+        if (r) {
+            var response = await fetch("/person/" + id, {
+                method: "DELETE"
+            });
+
+            if (response.ok) {
+             //   var html = await response.text();
+               // alert(html);
+
+               alert("Person deleted");
+               location.assign("/");
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
+
+        } else {
+            alert("cancelled");
+        }
+    };
+</script>
+    

@@ -1,0 +1,180 @@
+<div class="container">
+
+    <form action="/qpon/update/<%= qpon.id %>" method="post">
+
+        <div class="columns is-multiline ">
+
+            <div class="column is-half ">
+
+                <div class="field">
+                    <label class="label">Tittle</label>
+                    <div class="control">
+                        <input class="input" type="text" name="tittle" value="<%= qpon.tittle%>" required>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="column is-one-quarter ">
+                <div class="field">
+                    <label class="label">Quota</label>
+                    <div class="control">
+                        <input class="input" type="number" min="1" name="quota" value="<%= qpon.quota%>" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-one-quarter ">
+                <div class="field">
+                    <label class="label">Coins</label>
+                    <div class="control">
+                        <input class="input" type="number" min="1" name="coins" value="<%= qpon.coins%>" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half ">
+                <div class="field">
+                    <label class="label">Restaurant</label>
+                    <div class="control">
+                        <input class="input" type="text" name="restaurant" value="<%= qpon.restaurant%>" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half ">
+                <div class="field">
+                    <label class="label">Expiry Date</label>
+                    <div class="control">
+                        <input class="input" type="date" name="expiryDate" value="<%= qpon.expiryDate%>" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-one-quarter ">
+                <div class="field">
+                    <label class="label">Region</label>
+                    <div class="control">
+                        <div class="select">
+                            <select onchange="areaSelected(this.value)" name="area" required>
+                                <% if(qpon.area=="Kowloon"){ %>
+
+                                <option value="Kowloon">Kowloon</option>
+                                <option value="HK_Island">HK Island</option>
+                                <option value="New_Territories">New Territories</option>
+
+                                <%}else if(qpon.area=="New_Territories"){%>
+
+                                <option value="New_Territories">New Territories</option>
+                                <option value="Kowloon">Kowloon</option>
+                                <option value="HK_Island">HK Island</option>
+
+                                <%}else{%>
+
+                                <option value="HK_Island">HK Island</option>
+                                <option value="New_Territories">New Territories</option>
+                                <option value="Kowloon">Kowloon</option>
+
+                                <%}%>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-one-quarter ">
+                    <div class="field">
+                        <label class="label">Mall</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="mall" name="mall" required>
+
+                                    <% var hk_Island = ["IFC Mall", "Pacific Place", "Times Square"];%>
+                                <% var kowloon = ["Elements", "Harbour City", "Festival Walk", "MegaBox", "APM"];%>
+                                <% var new_Territories = ["New Town Plaza", "Tsuen Wan Plaza"];%>
+
+                                <option> <%=qpon.mall %> </option>
+
+                                <% if(qpon.area=="Kowloon"){ %>
+
+                                <% kowloon.forEach( function(mallAddress,index) { %>
+                                <% if(mallAddress!=qpon.mall ){ %>
+                                <option> <%=mallAddress%></option>
+                                <%}%>
+                                            
+                                    <%})}%>
+
+                                <% if(qpon.area=="New_Territories"){ %>
+
+                                <% new_Territories.forEach( function(mallAddress,index) { %>
+                                <% if(mallAddress!=qpon.mall ){ %>
+                                <option> <%=mallAddress%></option>
+                                <%}%>
+                                            
+                                    <%})}%>
+
+                                <% if(qpon.area=="HK_Island"){ %>
+
+                                <% hk_Island.forEach( function(mallAddress,index) { %>
+                                <% if(mallAddress!=qpon.mall ){ %>
+                                <option> <%=mallAddress%></option>
+                                <%}%>
+                                            
+                                    <%})}%>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half  ">
+                <div class="field">
+                    <label class="label">Image</label>
+                    <div class="control">
+                        <input class="input" type="text" name="imageLink" value="<%= qpon.imageLink%>" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half  ">
+                <div class="field">
+                    <label class="label">Detail</label>
+                    <div class="control">
+                        <textarea class="textarea" type="text" name="detail" rows="4"
+                            required><%= qpon.detail%></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-one-third ">
+
+            </div>
+
+            <div class="column is-one-third ">
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-link" type="submit" >Submit</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+    </form>
+
+    <br>
+    <form action="/qpon/delete/<%= qpon.id %>" method="post">
+
+
+        <button class="button is-danger">Delete </button>
+
+
+    </form>
+</div>
+
+
+

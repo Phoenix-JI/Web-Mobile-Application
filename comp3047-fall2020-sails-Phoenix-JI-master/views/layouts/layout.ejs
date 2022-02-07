@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Q-PON</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <%/* If you want to discourage search engines from indexing this site, uncomment the following line: */%>
+    <%/* <meta name="robots" content="noindex"> */%>
+
+
+    <!--
+        Stylesheets and Preprocessors
+        ==============================
+
+        You can always bring in CSS files manually with `<link>` tags, or asynchronously
+        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
+        of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+        By default, stylesheets from your `assets/styles` folder are included
+        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+        are supported. In production, your styles will be minified and concatenated into
+        a single file.
+
+        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+
+            + Change the order of your CSS files
+            + Import stylesheets from other directories
+            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+    -->
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+</head>
+
+<body>
+
+    <section class="theme">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="">
+                    <img
+                        src="data:image/png;base64,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">
+                </a>
+
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+
+                    <a class="navbar-item" href="/qpon/">
+                        Home
+                    </a>
+
+
+                    <a class="navbar-item" href="/qpon/search">
+                        Search
+                    </a>
+
+
+                    <% if(req.session.userRole == "SystemAdmin"){ %>
+                    <a class="navbar-item" href="/qpon/create">
+                        Create
+                    </a>
+
+                    <a class="navbar-item" href="/qpon/list">
+                        Admin
+                    </a>
+                    <% } %>
+
+                    <% if(req.session.userRole == "Member"){ %>
+                      
+                        
+                        <a class="navbar-item" href="/user/qponOwns">
+                            My Redeemed Coupons
+                        </a>
+
+                    <% } %>
+
+
+                </div>
+
+                <div class="navbar-end">
+
+                    <% if(!req.session.username){ %>
+
+                    <div class="navbar-item">
+                        <div class="buttons" float: right;>
+                            <a class="button is-primary" href="/user/login">
+                                Log in
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <% } else if(req.session.username) { %>
+
+                    <div class="navbar-item">
+                        <a class="username">
+                            Hi, <%= req.session.username %>
+                        </a>
+
+                    </div>
+
+                    <div class="navbar-item">
+                        <div class="buttons" float: right;>
+                            <form action="/user/logout" method="POST">
+                                <button type="submit" class="button is-danger">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+
+                </div>
+
+
+            </div>
+            </div>
+        </nav>
+    </section>
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Q-Pon
+                </h1>
+                <h2 class="subtitle">
+                    Redeem your coins for dining coupons
+                </h2>
+            </div>
+        </div>
+    </section>
+    <%- body %>
+
+
+
+
+
+    <!--
+        Client-side Templates
+        ========================
+
+        HTML templates are important prerequisites of modern, rich client applications.
+        To work their magic, frameworks like React, Vue.js, Angular, Ember, and Backbone
+        require that you load these templates client-side.
+
+        By default, your Gruntfile is configured to automatically load and precompile
+        client-side JST templates in your `assets/templates` folder, then
+        include them here automatically (between TEMPLATES and TEMPLATES END).
+
+        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+
+            + Import templates from other directories
+            + Use a different view engine (handlebars, dust, pug/jade, etc.)
+            + Internationalize your client-side templates using a server-side
+              stringfile before they're served.
+    -->
+
+    <!--TEMPLATES-->
+    <!--TEMPLATES END-->
+
+
+    <!--
+        Server-side View Locals
+        ========================
+
+        Sometimes, it's convenient to get access to your server-side view locals from
+        client-side JavaScript.  This can improve page load times, remove the need for
+        extra AJAX requests, and make your client-side code easier to understand and
+        to maintain.  Sails provides a simple mechanism for accessing dynamic view
+        locals: the "exposeLocalsToBrowser()" view partial.
+
+        For more information on using this built-in feature, see:
+        https://sailsjs.com/docs/concepts/views/locals#?escaping-untrusted-data-using-exposelocalstobrowser
+
+    -->
+
+
+    <!--
+
+      Client-side Javascript
+      ========================
+
+      You can always bring in JS files manually with `script` tags, or asynchronously
+      on the client using a solution like AMD (RequireJS).  Or, if you like, you can
+      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, files in your `assets/js` folder are included here
+      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+      and concatenated into a single file.
+
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+
+          + Change the order of your scripts
+          + Import scripts from other directories
+          + Use a different preprocessor, like TypeScript
+
+    -->
+
+    <!--SCRIPTS-->
+    <script src="/dependencies/sails.io.js"></script>
+    <!--SCRIPTS END-->
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</body>
+
+</html>

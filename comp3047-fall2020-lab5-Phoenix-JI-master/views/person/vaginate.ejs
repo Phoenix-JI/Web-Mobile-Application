@@ -1,0 +1,108 @@
+<div id="app">
+    <section class="section">
+
+        <div class="card" v-for="person in persons">
+            <header class="card-header">
+                <p class="card-header-title">
+                    {{person.name}}
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    {{person.age}}
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <nav class="pagination" role="navigation">
+        <button class="pagination-previous" v-bind:disabled="isFirstPage" v-on:click="fetchPage(limit, offset - limit)">Previous</button>
+        <button class="pagination-next" :disabled="isLastPage" v-on:click="fetchPage(limit, offset + limit)">Next page</button>
+        <ul class="pagination-list">
+            <li>
+                <a class="pagination-link" @click="fetchPage(limit, 0)">1</a>
+            </li>
+            <li>
+                <span class="pagination-ellipsis">&hellip;</span>
+            </li>
+            <li>
+                <a class="pagination-link" v-if="!isFirstPage" @click="fetchPage(limit, offset - limit)">{{currentPageNumber - 1}}</a>
+            </li>
+            <li>
+                <a class="pagination-link is-current" @click="fetchPage(limit, offset)">{{currentPageNumber}}</a>
+            </li>
+            <li>
+                <a class="pagination-link" v-if="!isLastPage" @click="fetchPage(limit, offset + limit)">{{currentPageNumber + 1}}</a>
+            </li>
+            <li>
+                <span class="pagination-ellipsis">&hellip;</span>
+            </li>
+            <li>
+                <a class="pagination-link"
+                    @click="fetchPage(limit, (Math.ceil(numOfRecords / limit) - 1) * limit)">{{Math.ceil(numOfRecords / limit)}}</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="columns">
+        <b-input class="column" v-model="limit"></b-input>
+        <div class="column">
+            <button class="button is-warning" @click="fetchPage(limit, 0)">GO!</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<!-- Full bundle -->
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+<!-- Individual components -->
+<script src="https://unpkg.com/buefy/dist/components/table"></script>
+<script src="https://unpkg.com/buefy/dist/components/input"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            numOfRecords: parseInt("<%= numOfRecords %>"),
+            persons: [],
+            currentPageNumber: 1,
+            limit: 2,
+            offset: 0,
+        },
+
+        mounted: function () {
+            this.fetchPage(this.limit, this.offset);
+        },
+
+        computed: {
+            isFirstPage: function () { return (this.offset < this.limit) },
+            isLastPage: function () { return (this.offset + this.limit >= this.numOfRecords) },
+        },
+
+        methods: {
+
+            fetchPage: async function (limit, offset) {
+
+                var response = await fetch("/person/vaginate?limit=" + limit + "&offset=" + offset);
+
+                if (response.ok) {
+                    var persons = await response.json();
+                    this.persons = persons;
+
+                    this.currentPageNumber = Math.floor(offset / limit) + 1;
+                    // `this` inside methods points to the Vue instance
+
+                    //this.limit = limit;
+                    this.limit = Math.max(parseInt(limit), 2);
+                    this.offset = offset;
+
+                } else {
+                    alert(response.statusText);
+                }
+            },
+
+        },
+    })
+</script>

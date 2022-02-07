@@ -1,0 +1,24 @@
+<!--update.ejs-->
+<form action="/person/update/<%= person.id %>" method="post">
+
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <input class="input" type="text" name="name" value="<%= person.name%>" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Age</label>
+        <div class="control">
+            <input class="input" type="number" name="age" value="<%= person.age%>" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-link" type="submit">Submit</button>
+        </div>
+    </div>
+
+</form>

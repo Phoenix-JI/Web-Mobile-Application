@@ -1,0 +1,10 @@
+<!--index.ejs-->
+<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+    
+    <% persons.forEach( function(person) { %>
+    
+        <tr><td><%= person.name %></td><td><%= person.age %></td></tr>
+    
+    <% }); %>
+
+</table>

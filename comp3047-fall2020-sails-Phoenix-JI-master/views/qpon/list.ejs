@@ -1,0 +1,32 @@
+<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+
+    <tr>
+        <td>ID</td>
+        <td>Tittle</td>
+        <td>Restaurant</td>
+        <td>Coins</td>
+        <td>Area</td>
+        <td>Mall</td>
+        <td>Valid Date</td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <% qpons.forEach( function(qpon) { %>
+
+    <tr>
+        <td><%= qpon.id %></td>
+        <td><%= qpon.tittle %></td>
+        <td><%= qpon.restaurant %></td>
+        <td><%= qpon.coins %></td>
+        <td><%= qpon.area %></td>
+        <td><%= qpon.mall %></td>
+        <td><%= qpon.expiryDate %></td>
+        <td><a href="http://localhost:1337/qpon/update/<%=qpon.id%>">Update</a></td>
+        <td><a href="http://localhost:1337/qpon/<%=qpon.id%>/masters">Redeemed Members</a></td>
+    </tr>
+
+    <% }); %>
+
+
+</table>

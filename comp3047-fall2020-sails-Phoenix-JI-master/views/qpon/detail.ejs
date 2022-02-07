@@ -1,0 +1,83 @@
+<section>
+    <div class="cotainer">
+
+        <div class="columns is-multiline">
+
+            <div class="column is-offset-1 is-one-third">
+
+                <div class="card"  style="margin-bottom: 1em;">
+                    <div class="card-image">
+                        <figure class="image is-square">
+                            <img style="object-fit:cover" src=<%=qpon.imageLink %> />
+                        </figure>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="column ">
+
+                <div class="information">
+                    <br></br>
+                    <ul>
+                        <li><strong><%=qpon.restaurant %></strong></li>
+                        <li><strong><%=qpon.tittle %></strong></li>
+                        <li><strong>Coins:&nbsp</strong><%=qpon.coins %></li>
+                        <li><strong>Address:&nbsp</strong><%=qpon.mall %></li>
+                        <li><strong>Expiry Date:&nbsp</strong><%=qpon.expiryDate %></li>
+                        <li><%=qpon.detail %></li>
+
+                    </ul>
+                </div>
+
+                <br>
+                <%if(req.session.userRole == 'Member'){%>
+
+                <% var i=0 %>
+                <% userQponOwns.forEach( function(qponOwns) { %>
+
+                    <%   if(qponOwns.id!=qpon.id) {%>
+                    <%  i++ %>
+                <% }}); %>
+
+                <%   if(i==userQponOwns.length) {%>
+
+                <button type="button" class="button is-danger" onclick="redeemQpon('<%= qpon.id %>')">Redeem Qpon</button>
+
+                <% }}; %>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    async function redeemQpon(fk) {                                  //fk- qpon.id 
+
+        var r = confirm("Confirm Redeem this Qpon? ");
+
+        if (r) {
+           
+                var response = await fetch("/user/qponOwns/" + fk, {
+                method: "POST"
+            });
+
+           
+            if (response.ok) {
+
+               alert("Qpon Redeemed");
+               location.assign("/");
+
+            } else {
+                //alert(response. + ": " + response.statusText);
+                var resP=await response.json();
+                alert(resP);
+            }
+
+        } else {
+            alert("cancelled");
+        }
+
+
+    }
+</script>
